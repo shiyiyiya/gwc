@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .pull-left {
+            float: left;
+        }
+
+        ul li input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+        }
+
+        ul li .box span {
+            width: 30px;
+            height: 32px;
+            line-height: 30px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .clearFix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>
+        <div class="title pull-left">苹果：</div>
+        <div class="box pull-left">
+            <span class="jian pull-left">-</span>
+            <input type="text" value="1" class="pull-left">
+            <span class="jia pull-left">+</span>
+        </div>
+        <div class="price pull-left">
+            价格：<span>5</span>
+        </div>
+        <div class="clearFix"></div>
+    </li>
+    <li>
+        <div class="title pull-left">香蕉：</div>
+        <div class="box pull-left">
+            <span class="jian pull-left">-</span>
+            <input type="text" value="1" class="pull-left">
+            <span class="jia pull-left">+</span>
+        </div>
+        <div class="price pull-left">
+            价格：<span>8</span>
+        </div>
+        <div class="clearFix"></div>
+    </li>
+    <li>
+        <div class="title pull-left">菠萝：</div>
+        <div class="box pull-left">
+            <span class="jian pull-left">-</span>
+            <input type="text" value="1" class="pull-left">
+            <span class="jia pull-left">+</span>
+        </div>
+        <div class="price pull-left">
+            价格：<span>3</span>
+        </div>
+        <div class="clearFix"></div>
+    </li>
+</ul>
+<div class="total">总价 <span>13</span></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.fn.extend({
+        product: function (option) {
+            var price = option.price;
+            var $input = this.find('input');
+            var $price = this.find('.price span');
+            $input.keyup(function () {
+                var text = $(this).val();
+                if (text != '') {
+                    text = parseInt(text);
+                    if (!text || text == 0) {
+                        $(this).val(1);
+                    } else {
+                        $(this).val(text);
+                    }
+                }
+                text = $(this).val();
+                // console.log(text);
+                $price.html(text * price);
+                var num = 0;
+                for (var i = 0; i < $('.price span').length; i++) {
+                    num += $('.price span').eq(i).text() - 0;
+                    console.log(num);
+                }
+                $('.total span').html(num);
+            });
+        }
+    });
+    $('ul li').eq(0).product({price: 5});
+    $('ul li').eq(1).product({price: 8});
+    $('ul li').eq(2).product({price: 3});
+
+</script>
+</html>
